@@ -1,0 +1,35 @@
+
+
+
+countDownLatch: 共享锁 aqs cas实现
+他被用来同步一个或者多个任务，强制他们等待由其他任务执行的一组操作完成
+
+该构造器可以指定初始计数值，调用其方法wait(）将进行阻塞，直到其计数值为0将进行释放，
+通过调用countDown()方法来使计数值减1
+
+countDownLatch被设计成只触发一次，计数值不能重置重复使用，如果有需要可 cyclicBarrier（类似于countDownLatch，但可重复使用）
+
+调用countDown()方法并没有进行阻塞，只有await（）会进行阻塞直到计数值为0
+
+
+
+cyclicBarrier:
+如果你希望创建一组任务 他们并行的执行工作 然后在进行下一个动作之前进行等待，直到所有任务都完成，使得他的
+所有并行任务都将在栅栏处列队 可以一致的向前移动
+
+可以提供一个栅栏动作，他是一个runnable 当计数值达到0时自动执行 这是他与countDownLatch的区别
+
+
+
+
+delayqueue:
+这是一个无界的blockingQueue,用于放置实现了Delayed接口的对象，其中的对象只有过期才能将其取出
+这种队列是有序的，即队头对象的延迟到期的时间最长，如果没有任何延时到期，那么就不会有任何的头元素
+并且poll返回null,因此你也不能将null放入队列中
+
+Delayed接口有一个方法为getDelay() 它可以用来告知延迟到期有多长时间，或者延迟在多长时间之前已经到期
+参数类型为TimeUnit,注意delta的值是毫秒为存储单位 而SyStem.nanoTime()是纳秒，可以通过TimeUnit的NANOSECONDS.convert(delta,MILLISECONDS)转换
+Delayed接口还实现了comparable接口用来产生合理的比较
+
+
+
